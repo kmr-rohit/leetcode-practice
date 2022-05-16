@@ -2,7 +2,7 @@ class Solution {
 public:
     int mincostTickets(vector<int>& days, vector<int>& costs) {
   unordered_set<int> travel(begin(days), end(days));
-        cout<<days.back()<<endl;
+        
   vector<int>dp(days.back()+1);
   for (int i = 1; i <= days.back(); ++i) {
     if (travel.find(i) == travel.end()) dp[i] = dp[i - 1];
