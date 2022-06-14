@@ -1,7 +1,7 @@
 class Solution {
 public:
     int minDistance(string s1, string s2) {
-        int n = s1.size();
+          int n = s1.size();
           int m = s2.size();
 
           vector < vector < int >> dp(n + 1, vector < int > (m + 1, 0));
