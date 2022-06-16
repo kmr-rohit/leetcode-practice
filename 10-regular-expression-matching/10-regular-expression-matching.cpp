@@ -43,49 +43,88 @@
 // }
 // };
 
+
+// Memoisation
+// class Solution{
+//     public:
+//     unordered_map<string, int> dp;
+// bool util(string s, string p, int n, int m){
+//     string key = to_string(n) + to_string(m);
+
+//     if(n <= -1 && m <= -1)
+//         return true;
+
+//     if(n == -1 && p[m] == '*')
+//         return util(s, p, n, m-2);
+
+//     if(n == -1 || m == -1)
+//         return false;
+
+//     if(dp.count(key))
+//         return dp[key];
+
+//     if(s[n] == p[m]){
+//         dp[key] = util(s, p, n-1, m-1);
+//     }
+//     else{
+//         if(p[m] == '*'){
+//             if(s[n] == p[m-1] || p[m-1] == '.'){
+//                 dp[key] = (util(s, p, n-1, m) || util(s, p, n, m-2));
+//             }
+//             else{
+//                 dp[key] = util(s, p, n, m-2);
+//             }
+//         }
+//         else if(p[m] == '.'){
+//             dp[key] = util(s, p, n-1, m-1);
+//         }
+//         else
+//             dp[key] = false;
+//     }
+
+//     return dp[key];
+// }
+
+// bool isMatch(string s, string p) {
+//     return util(s, p, s.length()-1, p.length()-1);
+// }  
+// };
+
+
+//Tabultaion
 class Solution{
-    public:
-    unordered_map<string, int> dp;
-bool util(string s, string p, int n, int m){
-    string key = to_string(n) + to_string(m);
+    public: 
+    bool isMatch(string s, string p) {
+    int n = s.length();
+    int m = p.length();
 
-    if(n <= -1 && m <= -1)
-        return true;
+    bool dp[n+1][m+1];
+    memset(dp, false, sizeof(dp));
 
-    if(n == -1 && p[m] == '*')
-        return util(s, p, n, m-2);
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= m; j++){
+            if(!i && !j)    dp[i][j] = true;
+            else if(!i && p[j-1] == '*')
+                dp[i][j] = dp[i][j-2];
+            else if(!i || !j) dp[i][j] = false;
 
-    if(n == -1 || m == -1)
-        return false;
-
-    if(dp.count(key))
-        return dp[key];
-
-    if(s[n] == p[m]){
-        dp[key] = util(s, p, n-1, m-1);
-    }
-    else{
-        if(p[m] == '*'){
-            if(s[n] == p[m-1] || p[m-1] == '.'){
-                dp[key] = (util(s, p, n-1, m) || util(s, p, n, m-2));
-            }
             else{
-                dp[key] = util(s, p, n, m-2);
+                if(s[i-1] == p[j-1])
+                    dp[i][j] = dp[i-1][j-1];
+
+                else if(p[j-1] == '*'){
+                    if(s[i-1] == p[j-2] || p[j-2] == '.')
+                        dp[i][j] = dp[i-1][j] || dp[i][j-2];
+                    else
+                        dp[i][j] = dp[i][j-2];
+                }
+                else if(p[j-1] == '.')
+                    dp[i][j] = dp[i-1][j-1];
             }
         }
-        else if(p[m] == '.'){
-            dp[key] = util(s, p, n-1, m-1);
-        }
-        else
-            dp[key] = false;
     }
 
-    return dp[key];
+    return dp[n][m];
 }
-
-bool isMatch(string s, string p) {
-    return util(s, p, s.length()-1, p.length()-1);
-}
-    
     
 };
