@@ -3,6 +3,7 @@ public:
     int dp[101][21][101];
     int solve(int i , int pc, int tn , vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target){
         if(tn > target){
+            // current neighbor  exceeds target
             return INT_MAX/2;
         }
         if(i == m){
@@ -17,8 +18,9 @@ public:
             return dp[i][pc][tn];
         }
         else{
+            
             int ans = INT_MAX/2;
-            if(houses[i] == 0){
+            if(houses[i] == 0){ //When it is not coloured 
                 for(int j = 0;j<n;j++){
                     ans = min ( ans , cost[i][j] + solve(i+1 , j+1 , (pc == j+1?tn:tn+1) ,houses , cost , m , n , target ));
 
