@@ -13,9 +13,9 @@ public:
         for(int i = 0; i<n;i++){
         int prefSum = prefix[i]%k;
         if(prefSum == 0 && i) ans = true;
-        if(m.find(prefSum) != m.end())  // Found the required prefix sum 
+        if(m.find(prefSum) != m.end())  
         {
-          if(i - m[prefSum] > 1) ans = true; // check if atleast 2 elements are there or not
+          if(i - m[prefSum] > 1) ans = true; 
         }
         else m[prefSum] = i;
       }
